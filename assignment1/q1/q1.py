@@ -3,7 +3,6 @@ import numpy as np
 import cv2
 import os
 from PIL import Image
-import glob
 
 #%%
 
@@ -45,7 +44,7 @@ def create_img(originx, originy, angle, len, color, thick):
 imlst = []
 imhlst = []
 ct = 0
-# print(Y[0:28,0:28,:])
+
 try:
     os.mkdir("./video")
     os.mkdir("./images")
@@ -75,8 +74,6 @@ def build_video(img):
         if X == 8:
             imgv = np.vstack( i for i in imhlst )
             imhlst = []
-
-            # if ct == 8:
                 
             cv2.imwrite('video/' + '1' + '.jpg', imgv)
             image = cv2.imread('video/' + '1' + '.jpg')
@@ -113,9 +110,9 @@ for l in range(0,2): #len
                             count-=1
                             
                             im = Image.fromarray(img)
-                            # im.show()
                             im.save('images/'+str(l)+'_' + str(t) + '_' + str(a) + '_' + str(c) +'/' + strn + '.jpg', quality = 100000)
-
+                            # im.show()
+                            
                             build_video(img)
                             ct+=1
 
