@@ -91,9 +91,9 @@ for l in range(0,2): #len
         for a in range(0,12): #angle
             for c in range(0,3,2): #color
                 try:
-                    os.mkdir('./images/'+str(l)+'_' + str(t) + '_' + str(a) + '_' + str(c))
+                    os.mkdir('./images/'+str(l)+'_' + str(t) + '_' + str(a) + '_' + str(int(c/2)))
                 except:
-                    print('./images/'+str(l)+'_' + str(t) + '_' + str(a) + '_' + str(c)+" already exists!")
+                    print('./images/'+str(l)+'_' + str(t) + '_' + str(a) + '_' + str(int(c/2))+" already exists!")
                 count = 1000
                 while count > 0:
                     for r in range(0,28):
@@ -106,11 +106,11 @@ for l in range(0,2): #len
                             if count <=0:
                                 break
                             
-                            strn = str(l)+'_' + str(t) + '_' + str(a) + '_' + str(c) + '_' + str(1001-count)
+                            strn = str(l)+'_' + str(t) + '_' + str(a) + '_' + str(int(c/2)) + '_' + str(1001-count)
                             count-=1
                             
                             im = Image.fromarray(img)
-                            im.save('images/'+str(l)+'_' + str(t) + '_' + str(a) + '_' + str(c) +'/' + strn + '.jpg', quality = 100000)
+                            im.save('images/'+str(l)+'_' + str(t) + '_' + str(a) + '_' + str(int(c/2)) +'/' + strn + '.jpg', quality = 100000)
                             # im.show()
                             
                             build_video(img)
