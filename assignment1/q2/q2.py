@@ -33,10 +33,13 @@ pos_list, vel_list = list(), list()
 pd = 10000 * np.ones((n, n), float)
 newV, newX = V, X
 time = 0.0
+count = 0
 with tf.Session() as sess:
+    writer = tf.summary.FileWriter("./graphs", sess.graph)
     np.fill_diagonal(pd, 10000)
     tmp = np.amin(pd)
     while tmp > threshold_dist:
+        count += 1
         print(tmp)
         time += timestep
         pos_list.append(newX)
