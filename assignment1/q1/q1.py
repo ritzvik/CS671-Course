@@ -112,9 +112,9 @@ for l in range(0,2): #len
                             im = Image.fromarray(img)
                             im.save('images/'+str(l)+'_' + str(t) + '_' + str(a) + '_' + str(int(c/2)) +'/' + strn + '.jpg', quality = 100000)
                             # im.show()
-                            
-                            build_video(img)
-                            ct+=1
+                            if count >= 910:
+                                build_video(img)
+                                ct+=1
 
 #%%
 os.remove("./video/1.jpg")
