@@ -40,7 +40,7 @@ with tf.Session() as sess:
     tmp = np.amin(pd)
     while tmp > threshold_dist:
         count += 1
-        print(tmp)
+        # print(tmp)
         time += timestep
         pos_list.append(newX)
         vel_list.append(newV)
