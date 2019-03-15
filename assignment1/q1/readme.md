@@ -31,10 +31,10 @@ To create directories and create/delete files
 1. `create_img(originx, originy, angle, len, color, thick)`
 2. `build_video(img)`
 
-#### create_img()
+#### `create_img()`
 This funtion takes origin, angle with x axis, length of line, color of line and thickness as parameters and returns (1, image array) if image is possible or returns (0, default) if image is not possible for given parameters.
 
-#### build_video()
+#### `build_video()`
 This function takes image array as parameter. After 9 images, it constructs one image of those 9 images and write it in videowriter.
 
 ### Global
