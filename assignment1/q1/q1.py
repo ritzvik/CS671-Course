@@ -39,8 +39,6 @@ def create_img(originx, originy, angle, len, color, thick):
 
 #%%
 
-#%%
-
 imlst = []
 imhlst = []
 ct = 0
