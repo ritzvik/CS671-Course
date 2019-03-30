@@ -1,4 +1,6 @@
 ## Team
 - Mukul Jangid (Lead Coder)
-- Ritwik Saha
-- Hrishikesh Sarode
+- Ritwik Saha (Assistant to Mukul Jangid)
+- Hrishikesh Sarode (Public Relations Manager)
+
+:laughing:
