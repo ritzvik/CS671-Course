@@ -1,8 +1,11 @@
 ## Team
 - Mukul Jangid
   - Lead Coder(Andha Paisa)
+  - Google Summer of Code 2018
+  - Intern at Directi
   - CEO of Bam Pakoda Jhunjhunwala Deep Learning Company Pvt. Ltd.
 - Ritwik Saha
+  - Maha Garib
   - Sweeper and Chai Wala at Bam Pakoda Jhunjhunwala Deep Learning Company Pvt. Ltd.
 - Hrishikesh Sarode
   - Public Relations Manager
