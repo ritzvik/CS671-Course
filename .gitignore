@@ -125,3 +125,7 @@ dmypy.json
 
 # VS Code
 .vscode
+
+
+# specific to Assignment-2
+assignment2/*.npy
