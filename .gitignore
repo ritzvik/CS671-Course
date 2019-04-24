@@ -129,3 +129,7 @@ dmypy.json
 
 # specific to Assignment-2
 assignment2/*.npy
+
+# specific to to Assignment-3
+assignment3/q2/Data
+assignment3/q2/Mask
