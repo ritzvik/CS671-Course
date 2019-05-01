@@ -118,7 +118,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.phase == "train":
-        if args.port is None:
+        if args.epochs is None:
              epoch = 1
         else:
             epoch = args.epochs
