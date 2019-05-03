@@ -18,47 +18,44 @@ def readData(path):
     imgs = []
     labels = []
     max1, max2 = 0,0
-    if not os.path.isfile('imgs.npy'):
+    Files = []
+
+    
+    files = [f for f in glob.glob(path + "Data/*.jpeg", recursive=True)]
+    Files = [f for f in glob.glob(path + "Data/*.jpeg", recursive=True)]
+    
+    for f in files:
+        im = cv2.imread(f,0)
+        im = np.asarray(im)
+        max1, max2 = max(max1, im.shape[0]), max(max2, im.shape[1])
         
-        files = [f for f in glob.glob(path + "Data/*.jpeg", recursive=True)]
+        imgs.append(im)
+
+        f = f.replace("Data", "Ground_truth" )
+        f = f.replace(".jpeg", "_gt.txt")
+    
+        fi = open(f, "r")
+        st = fi.read().split(" ")
+        labels.append(np.asarray(st)[:2])
         
-        for f in files:
-            im = cv2.imread(f,0)
-            im = np.asarray(im)
-            max1, max2 = max(max1, im.shape[0]), max(max2, im.shape[1])
-            
-            imgs.append(im)
 
-            f = f.replace("Data", "Ground_truth" )
-            f = f.replace(".jpeg", "_gt.txt")
-        
-            fi = open(f, "r")
-            st = fi.read().split(" ")
-            labels.append(np.asarray(st)[:2])
-            
+    print("Maximum Image size:", max1, max2)
+    np.save("dims.npy", [max1, max2])
 
-        print("Maximum Image size:", max1, max2)
-        np.save("dims.npy", [max1, max2])
-
-        img = []
-        for i in imgs:
-            i = np.asarray(i)
-            i = np.pad(i,((0,max1-i.shape[0]),(0,max2-i.shape[1])), 'constant', constant_values=(0, 0))
-            img.append(i)
+    img = []
+    for i in imgs:
+        i = np.asarray(i)
+        i = np.pad(i,((0,max1-i.shape[0]),(0,max2-i.shape[1])), 'constant', constant_values=(0, 0))
+        img.append(i)
 
 
-        imgs = np.asarray(img, dtype=np.uint8)
-        labels = np.asarray(labels, dtype=int)
+    imgs = np.asarray(img, dtype=np.uint8)
+    labels = np.asarray(labels, dtype=int)
 
-        np.save("./imgs.npy", imgs)
-        np.save("./labels.npy", labels)
+    np.save("./imgs.npy", imgs)
+    np.save("./labels.npy", labels)
 
-    else:
-        imgs = np.load("imgs.npy")
-        labels = np.load("labels.npy")
-        max1, max2 = np.load("dims.npy")
-
-    return imgs, labels, max1, max2
+    return imgs, labels, max1, max2, Files
     
 
 
@@ -99,14 +96,30 @@ def train(X, Y, epoch, model, max1, max2):
 
     model.save('q3.h5')
 
-def test(X, Y, model, max1, max2):
+def test(X, Y, model, max1, max2, fs):
 
     model.load_weights("q3.h5")
     X = X.reshape(-1,max1,max2,1)
-    score, acc = model.evaluate(X, Y, batch_size=16)
+    print(X.shape)
+    # score, acc = model.evaluate(X, Y, batch_size=16)
 
-    print("Accuracy:", acc )
-    print("Loss:", score)
+    # print("Accuracy:", acc )
+    # print("Loss:", score)
+
+    M = model.predict(X)
+    try:
+        os.mkdir("./results")
+    except:
+        pass
+    for i in range(len(fs)):
+        t = fs[i].split('/')
+        try:
+            os.mkdir("./results/"+t[len(t)-1].split('.')[0])
+        except:
+            pass
+        f = open("./results/"+t[len(t)-1].split('.')[0]+"/pred.txt", "w")
+        # f.write(np.array2string(M[i]))
+        f.write(str(int(M[i][0]))+","+str(int(M[i][1])))
 
 
 
@@ -124,12 +137,12 @@ if __name__ == '__main__':
             epoch = args.epochs
 
         path = input("Enter the training folder:")
-        X, Y, m1, m2 = readData(path)
+        X, Y, m1, m2, fs = readData(path)
         train(X, Y, epoch, model(m1, m2), m1, m2)
     elif args.phase == "test":
         path = input("Enter the training folder:")
-        X, Y, m1, m2 = readData(path)
-        test(X, Y, model(m1, m2), m1, m2)
+        X, Y, m1, m2, fs = readData(path)
+        test(X, Y, model(m1, m2), m1, m2, fs)
     else:
         print("Please mention the phase")
         
