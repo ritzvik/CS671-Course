@@ -97,120 +97,16 @@ def generate_data(f,batch_size):
         total_label = np.array(total_label)
         box_label = np.array(box_label)
         yield (total_images, {'class': total_label, 'box':box_label})
-        # return total_images
-# print("Reading Data")
-# total_images = []
-# total_label = []
-# box_label=[]
-# o=0
-# f= open("./Knuckle/groundtruth.txt","r")
-# f1 = f.readlines()
-# for x in f1:
-#     columns = x.split(',')
-
-#     if(os.path.exists("./Knuckle/%s"%(columns[0]))):
-#         o+=1
-#         image = cv2.imread ("./Knuckle/%s"%(columns[0]),0)
-#         image = np.pad(image,((0,480-image.shape[0]),(0,640-image.shape[1])), 'constant', constant_values=(0, 0))
-#         # resized_image = cv2.resize(image,(300,300))
-#         total_images.append (image.reshape(480,640,1))
-#         total_label.append((1,0,0))
-#         a=float(columns[1])
-#         b=float(columns[2])
-#         c=float(columns[3])
-#         d=float(columns[4])
-#         box_label.append((a,b,c,d))
-# f= open("./Palm/groundtruth.txt","r")
-# f1 = f.readlines()
-# for x in f1:
-#     columns = x.split(',')
-#     if(os.path.exists("./Palm/%s"%(columns[0]))):
-#         o+=1
-#         image = cv2.imread ("./Palm/%s"%(columns[0]),0)
-#         # resized_image = cv2.resize(image,(300,300))
-#         # image = np.pad(image,((0,480-image.shape[0]),(0,640-image.shape[1])), 'constant', constant_values=(0, 0))
-#         total_images.append (image.reshape(480, 640, 1))
-#         total_label.append((0,1,0))
-#         a=float(columns[1])
-#         b=float(columns[2])
-#         c=float(columns[3])
-#         d=float(columns[4])
-#         box_label.append((a,b,c,d))
-# f= open("./Vein/groundtruth.txt","r")
-# f1 = f.readlines()
-# for x in f1:
-#     columns = x.split(',')
-#     if(os.path.exists("./Vein/%s"%(columns[0]))):
-#         o+=1
-#         image = cv2.imread ("./Vein/%s"%(columns[0]),0)
-#         image = np.pad(image,((0,480-image.shape[0]),(0,640-image.shape[1])), 'constant', constant_values=(0, 0))
-#         # resized_image = cv2.resize(image,(300,300)) 
-#         total_images.append (image.reshape(480, 640, 1))
-#         total_label.append((0,0,1))
-#         a=float(columns[1])
-#         b=float(columns[2])
-#         c=float(columns[3])
-#         d=float(columns[4])
-#         box_label.append((a,b,c,d))
-
-# print("ghymknl%s"%(o))
-
-# def shuffle(a,b):
-#     indices = np.arange(a.shape[0])
-#     np.random.shuffle(indices)
-#     a = a[indices]
-#     b = b[indices]
-#     return a,b
-
-
-
-# total_images = np.array(total_images,dtype=np.uint8)
-# total_label = np.array(total_label)
-# box_label = np.array(box_label)
-# print(total_images.shape)
-# print("nkfd")
-# np.save("Imgs.npy", total_images)
-# np.save("Labels.npy", total_label)
-# np.save("BocLabel.npy", box_label)
-# # print("nkf0d")
-# # total_images= np.load("Imgs.npy")
-# # total_label = np.load("Labels.npy")
-# # box_label = np.load("BocLabel.npy")
-# total_images, total_label=shuffle(total_images, total_label)
-
-# train_images = total_images[:10500]
-# train_label  = total_label[:10500]
-# train_box    = box_label[:10500]
-# test_images = total_images[10501:]
-# test_label  = total_label[10501:]
-# test_box    = box_label[10501:]
-
-# total_images[0].shape
-
-# total_images[3].shape
-
-# total_images[1].shape
-
-# total_label[2]
-# box_label[3][2]
-
-# imgplot = plt.imshow(total_images[123])
-# plt.show()
+        
 
 lines_input = Input(shape=(480, 640, 1), name='line')
 x = layers.Conv2D(32, (3, 3), activation='relu')(lines_input)
 x = layers.BatchNormalization()(x)
 x = layers.MaxPooling2D(pool_size=(4, 4),strides=2)(x)
-# x = layers.Conv2D(32, (3, 3), activation='relu')(x)
+
 
 x = layers.Conv2D(32, (3, 3), activation='relu')(x)
 x = layers.BatchNormalization()(x)
-# x = layers.Conv2D(64, (3, 3), activation='relu')(x)
-# x = layers.BatchNormalization()(x)
-# x = layers.Conv2D(128, (3, 3), activation='relu')(x)
-# x = layers.BatchNormalization()(x)
-# x = layers.Conv2D(16, (3, 3), activation='relu', strides=2)(x)
-# x = layers.BatchNormalization()(x)
 x = layers.MaxPooling2D(pool_size=(4, 4),strides=2)(x)
 x = layers.Flatten()(x)
 
@@ -241,25 +137,4 @@ history = model.fit_generator(generate_data(f,bs),
                     validation_data=generate_data(f, bs),
                               validation_steps=1,
                     verbose=1)
-# history = model.fit(train_images,[train_label,train_box], 
-#                     epochs=3	, 
-#                     validation_split=0.1,
-#                     batch_size=32,
-#                     verbose=1)
-# y_pred = model.predict(test_images)
 model.save("q1.h5")
-
-# y_pred[1][0]
-
-# test_box[1]
-
-# model = load_model("q1.h5")
-
-# test_batch = generate_data(f, 1)
-# np.save("test_image.npy", test_batch[0])
-# # print(test_batch[0].shape
-# predictions = model.predict_on_batch(test_batch)
-# print(predictions)
-# img2=cv2.rectangle(test_images[1], (57,177), (204,336),color=(0, 255, 0), thickness=3)
-# imgplot = plt.imshow(img2)
-# plt.show()
