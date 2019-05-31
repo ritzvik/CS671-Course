@@ -1,6 +1,6 @@
 ## Team
 - Mukul Jangid
-  - Worker of Ritwik Saha
+  - Statistics God
   - Lead Coder(Andha Paisa)
   - Google Summer of Code 2018
   - Intern at Directi
